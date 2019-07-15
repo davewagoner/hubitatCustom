@@ -89,36 +89,6 @@ private getTemperatureResult(hex){
     sendEvent(name: name,value: value,descriptionText: descriptionText,unit: unit)
 }
 
-private getHumidityResult(hex){
-    def valueRaw = hexStrToUnsignedInt(hex)
-    def value = valueRaw / 100
-    def name = "humidity"
-    def unit = "%"
-    def descriptionText = "${device.displayName} ${name} is ${value}${unit}"
-    if (txtEnable) log.info "${descriptionText}"
-    sendEvent(name: name,value: value,descriptionText: descriptionText,unit: unit)
-}
-
-private getLuminanceResult(hex) {
-	def rawValue = hexStrToUnsignedInt(hex)
-    def value = (Math.pow(10,(rawValue/10000))+ 1).toInteger()
-    if (rawValue.toInteger() == 0) value = "0"
-    def name = "illuminance"
-    def unit = "Lux"	
-    def descriptionText = "${device.displayName} ${name} is ${value}${unit}"
-    if (txtEnable) log.info "${descriptionText}"
-	sendEvent(name: name,value: value,descriptionText: descriptionText,unit: unit)
-}
-
-private getPressureResult(hex){
-    def valueRaw = hexStrToUnsignedInt(hex)
-    def value = valueRaw / 10
-    def name = "pressure"
-    def unit = "kPa"
-    def descriptionText = "${device.displayName} ${name} is ${value}${unit}"
-    if (txtEnable) log.info "${descriptionText}"
-    sendEvent(name: name,value: value,descriptionText: descriptionText,unit: unit)
-}
 
 
 //capability and device methods
@@ -167,21 +137,4 @@ def updated() {
     log.warn "description logging is: ${txtEnable == true}"
     if (logEnable) runIn(1800,logsOff)    
 
-    /* example temp offset
-   	def crntTemp = device?.currentValue("temperature")
-    if (refTemp && crntTemp && state.sensorTemp) {
-        def prevOffset = (state.tempOffset ?: 0).toFloat().round(2)
-        def deviceTemp = state.sensorTemp.toFloat().round(2)
-        def newOffset =  (refTemp.toFloat() - deviceTemp).round(2)
-        def newTemp = (deviceTemp + newOffset).round(2)
-        //send new event on offSet change
-        if (newOffset.toString() != prevOffset.toString()){
-            state.tempOffset = newOffset
-            def map = [name: "temperature", value: "${newTemp}", descriptionText: "${device.displayName} temperature offset was set to ${newOffset}°${location.temperatureScale}"]
-            if (txtEnable) log.info "${map.descriptionText}"
-            sendEvent(map)
-        }
-        //clear refTemp so it doesn't get changed later...
-        device.removeSetting("refTemp")
-    }
-	*/
+
