@@ -8,12 +8,36 @@ Original source: https://github.com/hubitat/HubitatPublic/blob/master/examples/d
 	WeatherGOVRest
   
   API for what I want: https://api.weather.gov/gridpoints/PQR/110,100/forecast
+  example of JsonSlurper: https://stackoverflow.com/questions/20733836/parse-json-object-from-url-in-groovy
   
   Start with "today's high" and we'll go from there.
   
 */
 
 import groovy.transform.Field
+import groovy.json.JsonSlurper
+
+class GetCardService {
+
+    String token = "?token=f1fc6636e6f25d97c007984f0c7fe5785b3e3482"
+    String base = "https://api.weather.gov/gridpoints/PQR/110,100/forecast"
+    String id = "id/"
+    String cardId
+    String apiString
+
+    def getCardById() {
+
+        apiString =base 
+
+        URL apiUrl = new URL(apiString)
+
+        def card = new JsonSlurper().parse(apiUrl)
+
+        return card
+
+    }
+
+}
 
 metadata {
     definition (name: "", namespace: "hubitatCustom", author: "hubitatCustom/dave") {
