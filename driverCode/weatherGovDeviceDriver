@@ -2,6 +2,8 @@
 master: https://api.weather.gov/points/45.449,-122.714
 daily forecast: https://api.weather.gov/gridpoints/PQR/110,100/forecast
 
+"template" from https://github.com/thoward1234/Hubitat-Ambient-Weather. This is so guts-ripped-out it's not worthy of calling it a fork.
+
 todo: 
 - add logic check for today's high temp based on date, isDaytime
 - add temp units
